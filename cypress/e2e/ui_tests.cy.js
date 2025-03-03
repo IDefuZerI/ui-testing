@@ -23,12 +23,31 @@ describe('UI Тестування DemoQA', () => {
       cy.get('.rct-icon-check').should('be.visible');
   });
 
-  it('Перевірка натискання кнопки', () => {
-      cy.contains('Elements').click();
-      cy.contains('Buttons').click();
-      cy.contains('Click Me').click();
-      cy.contains('You have clicked').should('be.visible');
-  });
+  it('Перевірка додавання нового запису в таблицю', () => {
+    cy.contains('Elements').click();
+    cy.contains('Web Tables').click();
+
+    // Натискання кнопки "Add"
+    cy.get('#addNewRecordButton').click();
+
+    // Заповнення форми
+    cy.get('#firstName').type('Іван');
+    cy.get('#lastName').type('Петров');
+    cy.get('#userEmail').type('ivan.petrov@example.com');
+    cy.get('#age').type('30');
+    cy.get('#salary').type('5000');
+    cy.get('#department').type('IT');
+
+    // Натискання кнопки "Submit"
+    cy.get('#submit').click();
+
+    // Очікуємо, що запис з'явиться в таблиці
+    cy.get('.rt-tbody').should('contain', 'Іван');
+    cy.get('.rt-tbody').should('contain', 'Петров');
+    cy.get('.rt-tbody').should('contain', 'ivan.petrov@example.com');
+});
+
+
 
   it('Перевірка появи модального вікна', () => {
       cy.contains('Alerts, Frame & Windows').click();
